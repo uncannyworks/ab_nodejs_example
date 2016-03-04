@@ -207,11 +207,7 @@ var assign_hooks = function() {
     sdk.set_speed(20);    
     sdk.send_weapon_request(sdk.LOCATION_TYPE.Torso, 0, 0, null, sdk.WEAPON_FIRE_STATE.Fire);
 
-    //query_wm();
-    /* TODO KILL */
-    setInterval(function() {
-      query_wm();
-    }, 1000);
+    query_wm();    
   }
 
   sdk.on_game_phase_end = function() {
@@ -344,11 +340,9 @@ var ai_logic = function(mechState) {
   screen.render();
 
   // We have a limited number of API calls per second for reads and writes so we'll throttle.
-  /* TODO Uncomment
   setTimeout(function() {
     query_wm();
   }, 1000);
-  */
 }
 
 var start_shooting = function(weapon, burst) {
