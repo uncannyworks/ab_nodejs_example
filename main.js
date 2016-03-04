@@ -205,7 +205,6 @@ var assign_hooks = function() {
     vt = process.hrtime();
 
     sdk.set_speed(20);    
-    sdk.send_weapon_request(sdk.LOCATION_TYPE.Torso, 0, 0, null, sdk.WEAPON_FIRE_STATE.Fire);
 
     query_wm();    
   }
