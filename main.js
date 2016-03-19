@@ -204,7 +204,7 @@ var assign_hooks = function() {
     inGame = true;
     vt = process.hrtime();
 
-    sdk.set_speed(20);    
+    sdk.set_speed(20);
 
     query_wm();    
   }
@@ -234,7 +234,7 @@ var shooting = false;
 var defTurn = 10;
 var turnSpeed = 2;
 var ai_logic = function(mechState) {
-  sdk.rotate_torso(0, 20, 10);
+  //sdk.rotate_torso(0, 20, 10);
 
   var currentSpeed = 0;
   var travelDistance = 0;
@@ -345,6 +345,7 @@ var ai_logic = function(mechState) {
 }
 
 var start_shooting = function(weapon, burst) {
+  if (!inGame) return;
   if (shooting) return;
   sdk.fire_weapon(weapon);
   shooting = true;
@@ -354,6 +355,7 @@ var start_shooting = function(weapon, burst) {
 }
 
 var stop_shooting = function(weapon) {
+  if (!inGame) return;
   sdk.idle_weapon(weapon);
   setTimeout(function() {
     shooting = false;
@@ -370,6 +372,6 @@ assign_hooks();
 
 sdk.connect(4000, '127.0.0.1', 'username', 'password');
 
-setInterval(function(){
+setInterval(function(){  
   defTurn = -defTurn;
 }, 10000);
