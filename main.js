@@ -327,6 +327,7 @@ var ai_logic = function(mechState) {
   stats.setLine(16, "Disance: " + travelDistance);
   stats.setLine(17, "Speed: " + currentSpeed);
 
+  /*
   var ta = null;
   var i = 0;
   do {
@@ -335,13 +336,23 @@ var ai_logic = function(mechState) {
   if(ta){
     stats.setLine(19, "Torso Rotation: " + ta.rotationCurrent.x + " " + ta.rotationCurrent.y + " " + ta.rotationCurrent.z + " " + ta.rotationCurrent.w);
   }
+  */
+  stats.setLine(19, "Position: " + f2s(mechState.position.x) + " " + f2s(mechState.position.y) + " " + f2s(mechState.position.z));
+  var e = new THREE.Euler(0,0,0);
+  e.setFromQuaternion(rot);
+  stats.setLine(20, "Rotation: " + f2s(e.x) + " " + f2s(e.y) + " " + f2s(e.z));  
+
 
   screen.render();
 
   // We have a limited number of API calls per second for reads and writes so we'll throttle.
   setTimeout(function() {
     query_wm();
-  }, 1000);
+  }, 1);
+}
+
+var f2s = function(f){
+  return "" + Math.floor(f*100)/100;
 }
 
 var start_shooting = function(weapon, burst) {
