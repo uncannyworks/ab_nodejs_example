@@ -80,6 +80,16 @@ screen.render();
 var receivedCounter = {};
 var sentCounter = {};
 
+var reset_ui = function() {
+  stats.content = '{bold}State{/bold}';
+
+  messages.content = '{bold}Messages Received{/bold}';
+  messages.setLine(7, '{bold}Messages Sent{/bold}');
+
+  receivedCounter = {};
+  sentCounter = {};
+}
+
 var assign_hooks = function() {
   sdk.on_message_received = function(code, message) {
     if (receivedCounter[code]) receivedCounter[code]++;
@@ -134,6 +144,8 @@ var assign_hooks = function() {
   }
 
   sdk.on_configuration_phase_start = function() {
+    reset_ui();
+    
     stats.setLine(1, "Configuration Phase Start...");
     screen.render();
 
@@ -216,7 +228,7 @@ var assign_hooks = function() {
   sdk.on_game_phase_end = function() {
     stats.setLine(1, "Game Phase End");
     screen.render();
-    inGame = false;
+    inGame = false;    
   }
 }
 
