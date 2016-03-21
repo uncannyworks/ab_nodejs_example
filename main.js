@@ -206,7 +206,11 @@ var assign_hooks = function() {
 
     sdk.set_speed(20);
 
-    query_wm();    
+    query_wm();
+
+    if(Math.random() > 0.5){
+      defTurn *= -1;
+    }
   }
 
   sdk.on_game_phase_end = function() {
@@ -231,9 +235,10 @@ var query_wm = function() {
 
 var shooting = false;
 
-var defTurn = 10;
+var defTurn = 1;
 var turnSpeed = 2;
 var ai_logic = function(mechState) {
+//TODO: Uncomment to test.
   //sdk.rotate_torso(0, 20, 10);
 
   var currentSpeed = 0;
@@ -340,7 +345,7 @@ var ai_logic = function(mechState) {
   stats.setLine(19, "Position: " + f2s(mechState.position.x) + " " + f2s(mechState.position.y) + " " + f2s(mechState.position.z));
   var e = new THREE.Euler(0,0,0);
   e.setFromQuaternion(rot);
-  stats.setLine(20, "Rotation: " + f2s(e.x) + " " + f2s(e.y) + " " + f2s(e.z));  
+  stats.setLine(20, "Rotation: " + rad2s(e.x) + " " + rad2s(e.y) + " " + rad2s(e.z));  
 
 
   screen.render();
@@ -348,7 +353,11 @@ var ai_logic = function(mechState) {
   // We have a limited number of API calls per second for reads and writes so we'll throttle.
   setTimeout(function() {
     query_wm();
-  }, 1);
+  }, 100);
+}
+
+var rad2s = function(f){
+  return "" + Math.floor((f*100) * (180/Math.PI))/100;
 }
 
 var f2s = function(f){
@@ -382,7 +391,8 @@ var hrtime_to_seconds = function(t){
 assign_hooks();
 
 sdk.connect(4000, '127.0.0.1', 'username', 'password');
-
+/* Uncomment for some random turning when no target exists.
 setInterval(function(){  
   defTurn = -defTurn;
 }, 10000);
+*/
