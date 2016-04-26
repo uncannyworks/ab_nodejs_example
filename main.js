@@ -213,6 +213,7 @@ var assign_hooks = function() {
     stats.setLine(1, "Game Phase Start");
     screen.render();
     inGame = true;
+    shooting = false;
     vt = process.hrtime();
 
     sdk.set_speed(20);
@@ -317,12 +318,12 @@ var ai_logic = function(mechState) {
       stats.setLine(8, "Not turning!");
     }
     if (angle <= 10 && angle >= -10) {
-      if(weapons[0].ammoCurrent + weapons[0].clipCurrent > 0)
-        start_shooting(weapons[0], 500);      
-      else if(weapons[1].ammoCurrent + weapons[1].clipCurrent > 0)
-        start_shooting(weapons[1], 500); 
-      else if(weapons[2].ammoCurrent + weapons[2].clipCurrent > 0)
-        start_shooting(weapons[2], 500); 
+      for( var i=0; i<weapons.length; i++){
+        if(weapons[i].ammoCurrent + weapons[i].clipCurrent > 0){
+          start_shooting(weapons[i], 500);      
+          break;
+        }
+      }      
     }
   } else {
     lastTargetId = -1;
@@ -334,9 +335,9 @@ var ai_logic = function(mechState) {
 
   stats.setLine(4, 'Logic took ' + ((diff[0] * 1e9 + diff[1]) / 1000000) + ' milliseconds');
 
-  stats.setLine(10, "Weapon 0 Ammo: " + weapons[0].clipCurrent + "/" + weapons[0].ammoCurrent);
-  stats.setLine(11, "Weapon 1 Ammo: " + weapons[1].clipCurrent + "/" + weapons[1].ammoCurrent);
-  stats.setLine(12, "Weapon 2 Ammo: " + weapons[2].clipCurrent + "/" + weapons[2].ammoCurrent);
+  for( var i=0; i<weapons.length; i++){
+    stats.setLine(10 + i, "Weapon " + i + " Ammo: " + weapons[i].clipCurrent + "/" + weapons[i].ammoCurrent);    
+  }
 
   stats.setLine(14, "Visible Target Count: " + mechs.length);
 
