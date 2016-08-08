@@ -145,7 +145,7 @@ var assign_hooks = function() {
 
   sdk.on_configuration_phase_start = function() {
     reset_ui();
-    
+
     stats.setLine(1, "Configuration Phase Start...");
     screen.render();
 
@@ -163,13 +163,13 @@ var assign_hooks = function() {
     var cockpit_message = sdk.build_config_cockpit_message("UW Generic", ["UW Elementary Edition"], ["UW Megane"], ["UW Radio"], "UW Standard", ["UW Simply Safe"]);
 
     // Arms
-    var armsArray = [];    
+    var armsArray = [];
     // Our arms support 1 weapons each.
     var armWeaponsArray = [];
     armWeaponsArray.push(sdk.make_weapon("UW Saw", "WEPN-UNIV-O", "", "UW BB"));
     armsArray.push(sdk.make_arm("UW Weapon Mount", "ARMS-UNIV-L", "UW Standard", armWeaponsArray, ["UW Simply Safe"]));
     armsArray.push(sdk.make_arm("UW Weapon Mount", "ARMS-UNIV-R", "UW Standard", armWeaponsArray, ["UW Simply Safe"]));
-    
+
     var arm_messages = sdk.build_config_arm_messages(armsArray);
 
     // Legs
@@ -228,7 +228,7 @@ var assign_hooks = function() {
   sdk.on_game_phase_end = function() {
     stats.setLine(1, "Game Phase End");
     screen.render();
-    inGame = false;    
+    inGame = false;
   }
 }
 
@@ -311,7 +311,7 @@ var ai_logic = function(mechState) {
         sdk.rotate(-Math.min(angle, turnSpeed));
       } else { // On the right
         stats.setLine(8, "Turning right!");
-        sdk.rotate(Math.min(angle, turnSpeed));        
+        sdk.rotate(Math.min(angle, turnSpeed));
       }
     } else {
       sdk.rotate(0);
@@ -320,10 +320,10 @@ var ai_logic = function(mechState) {
     if (angle <= 10 && angle >= -10) {
       for( var i=0; i<weapons.length; i++){
         if(weapons[i].ammoCurrent + weapons[i].clipCurrent > 0){
-          start_shooting(weapons[i], 500);      
+          start_shooting(weapons[i], 500);
           break;
         }
-      }      
+      }
     }
   } else {
     lastTargetId = -1;
@@ -336,7 +336,7 @@ var ai_logic = function(mechState) {
   stats.setLine(4, 'Logic took ' + ((diff[0] * 1e9 + diff[1]) / 1000000) + ' milliseconds');
 
   for( var i=0; i<weapons.length; i++){
-    stats.setLine(10 + i, "Weapon " + i + " Ammo: " + weapons[i].clipCurrent + "/" + weapons[i].ammoCurrent);    
+    stats.setLine(10 + i, "Weapon " + i + " Ammo: " + weapons[i].clipCurrent + "/" + weapons[i].ammoCurrent);
   }
 
   stats.setLine(14, "Visible Target Count: " + mechs.length);
@@ -349,7 +349,7 @@ var ai_logic = function(mechState) {
   var i = 0;
   do {
     ta = mechState.actuators[i++];
-  } while (i < mechState.actuators.length && ta.location.locationType != sdk.LOCATION_TYPE.Torso);    
+  } while (i < mechState.actuators.length && ta.location.locationType != sdk.LOCATION_TYPE.Torso);
   if(ta){
     stats.setLine(19, "Torso Rotation: " + ta.rotationCurrent.x + " " + ta.rotationCurrent.y + " " + ta.rotationCurrent.z + " " + ta.rotationCurrent.w);
   }
@@ -357,7 +357,7 @@ var ai_logic = function(mechState) {
   stats.setLine(19, "Position: " + f2s(mechState.position.x) + " " + f2s(mechState.position.y) + " " + f2s(mechState.position.z));
   var e = new THREE.Euler(0,0,0);
   e.setFromQuaternion(rot);
-  stats.setLine(20, "Rotation: " + rad2s(e.x) + " " + rad2s(e.y) + " " + rad2s(e.z));  
+  stats.setLine(20, "Rotation: " + rad2s(e.x) + " " + rad2s(e.y) + " " + rad2s(e.z));
 
 
   screen.render();
@@ -402,9 +402,9 @@ var hrtime_to_seconds = function(t){
 
 assign_hooks();
 
-sdk.connect(4000, '127.0.0.1', 'username', 'password');
+sdk.connect(4000, '127.0.0.1', 'username');
 /* Uncomment for some random turning when no target exists.
-setInterval(function(){  
+setInterval(function(){
   defTurn = -defTurn;
 }, 10000);
 */
