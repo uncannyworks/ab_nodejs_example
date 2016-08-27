@@ -402,7 +402,7 @@ var hrtime_to_seconds = function(t){
 
 assign_hooks();
 
-sdk.connect(4000, '127.0.0.1', 'username');
+sdk.connect('username');
 /* Uncomment for some random turning when no target exists.
 setInterval(function(){
   defTurn = -defTurn;
